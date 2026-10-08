@@ -1205,6 +1205,9 @@ body.editing .wp .wp-pin::after { content: ''; position: absolute; inset: -6px; 
 .stat-list { margin-top: 14px; border-top: 1px solid var(--border); }
 .stat-list div { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
 .stat-list span { color: var(--text-mute); }
+/* About: email + every profile link on a single row */
+.about-links .chip { height: 32px; padding: 0 12px; font-size: 13px; white-space: nowrap; }
+@media (min-width: 1024px) { .about-links { flex-wrap: nowrap; } }
 .site-credit a { color: var(--text-dim); text-decoration: none; }
 .site-credit a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
 .site-credit { margin: 8px 0 0; padding-top: 18px; border-top: 1px solid var(--line-soft, var(--border)); font-size: 12px; color: var(--text-mute); }
@@ -4256,7 +4259,7 @@ function renderAbout() {
         <div class="a-block"><div class="a-label">Education</div>${S.education.map((e, i) => `<div class="edu-item"><b ${ce(`T|site.education.${i}`, 'what')}>${esc(e.what)}</b><span>${esc([e.where, e.when].filter(Boolean).join(' · '))}</span></div>`).join('')}</div>
         <div class="a-block"><div class="a-label">Skills</div><div class="tags">${S.skills.map(s => `<span>${esc(s)}</span>`).join('')}</div></div>
         <div class="a-block"><div class="a-label">Software</div><div class="tags">${S.software.map(s => `<span>${esc(s)}</span>`).join('')}</div></div>
-        <div class="a-block"><div class="a-label">Contact</div><div class="hud-links"><a class="chip solid" href="${esc(mailHref)}">${esc(S.email)}</a>${S.links.map(l => `<a class="chip" href="${esc(l.url)}" ${ext(l.url)}>${esc(l.label)}</a>`).join('')}</div></div>
+        <div class="a-block"><div class="a-label">Contact</div><div class="hud-links about-links"><a class="chip solid" href="${esc(mailHref)}">${esc(S.email)}</a>${S.links.map(l => `<a class="chip" href="${esc(l.url)}" ${ext(l.url)}>${esc(l.label)}</a>`).join('')}</div></div>
         ${S.credit ? `<p class="site-credit">Site designed &amp; built by <a href="${esc(S.credit.url)}" ${ext(S.credit.url)}>${esc(S.credit.name)} ↗</a></p>` : ''}
       </div>
     </div></div>`;
