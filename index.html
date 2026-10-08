@@ -3388,7 +3388,7 @@ body:not(.editing) #game .hb-tiles .game-card { flex: 0 0 calc((100% - 64px) / 5
   },
   "places": {
    "game": {
-    "x": 1650,
+    "x": 1550,
     "y": 905,
     "region": "The Inferno",
     "glyph": "heart"
@@ -4037,12 +4037,15 @@ function driveTick(now) {
     for (const p of PLACES) { const d = Math.hypot(p.x - car.x, p.y + 25 - car.y); if (d < best) { best = d; near = p; } }
     // places that have an island to themselves count as soon as the car is on that island
     if (!near) near = PLACES.find(p => { const I = islandOf(p); return I && ((car.x - I.cx) / I.rx) ** 2 + ((car.y - I.cy) / I.ry) ** 2 < 1; }) || null;
+    // the drive-in: getting close to the screen counts as arriving at Animation, and its card opens right away
+    const an = MAP.places.animation, inScreen = Math.abs(car.x - an.x) < 170 && car.y > an.y - 330 && car.y < an.y - 30;
+    if (!near && inScreen) near = PLACES.find(p => p.id === 'animation') || null;
     if (near?.id !== car.near?.id) {
       if (car.near && car.nearOpened && current && current.id === car.near.id) closeLoc();
       car.near = near; car.nearOpened = false;
     }
     // the card only opens once you actually stop there, not while driving past
-    if (car.near && !car.nearOpened && !EDIT.on && Math.abs(car.v) < 1 && !car.target) { if (current?.id !== car.near.id) selectPlace(car.near.id, false); car.nearOpened = true; }
+    if (car.near && !car.nearOpened && !EDIT.on && ((Math.abs(car.v) < 1 && !car.target) || (inScreen && car.near.id === 'animation'))) { if (current?.id !== car.near.id) selectPlace(car.near.id, false); car.nearOpened = true; }
     $$('.wp.arrived', world).forEach(w => { if (w.dataset.id !== car.near?.id) w.classList.remove('arrived'); });
     $('#loc').classList.toggle('at-place', !!(car.near && current && current.id === car.near.id));
     if (car.near) world.querySelector(`.wp[data-id="${car.near.id}"]`)?.classList.add('arrived');
