@@ -1,0 +1,12 @@
+{
+    // Press F5 (or Run > Start Debugging) to open the portfolio in Chrome.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open portfolio in Chrome",
+            "file": "${workspaceFolder}/index.html"
+        }
+    ]
+}

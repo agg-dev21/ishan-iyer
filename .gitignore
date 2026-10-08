@@ -1,0 +1,11 @@
+# Ishan's original files: too large for GitHub (some videos are over 100 MB).
+# The site only needs the web-sized copies in /assets.
+/animations_/
+/game/
+/concept design/
+/environments/
+/sketch/
+/class projects/
+
+.DS_Store
+Thumbs.db
