@@ -1021,6 +1021,16 @@ button.pin:hover, button.pin:focus-visible { transform: translate(-50%, -7px); }
 .inferno-glow { position: absolute; width: 300px; height: 300px; opacity: .7; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
   background: radial-gradient(circle, rgba(255,150,70,.5), rgba(226,104,31,.18) 38%, transparent 68%); mix-blend-mode: screen; animation: breathe 4.5s ease-in-out infinite; }
 @keyframes breathe { 50% { opacity: .55; transform: translate(-50%, -50%) scale(.92); } }
+/* Animation's landmark: a drive-in screen playing one of Ishan's clips */
+.drivein { position: absolute; width: 250px; transform: translate(-50%, -100%); pointer-events: none; }
+.drivein::before { content: ''; position: absolute; left: 50%; top: 42%; width: 420px; height: 300px; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,241,201,.42), rgba(255,241,201,.12) 45%, transparent 70%); mix-blend-mode: screen; animation: flicker 5s ease-in-out infinite; }
+@keyframes flicker { 0%, 100% { opacity: .9; } 47% { opacity: .75; } 50% { opacity: 1; } 53% { opacity: .8; } }
+.drivein-screen { position: relative; aspect-ratio: 16/9; border: 5px solid #1B2142; border-radius: 4px; background: #FFF6E2; overflow: hidden;
+  box-shadow: 0 0 0 2px #F6EFDF, 0 0 40px rgba(255,241,201,.55); }
+.drivein-screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.drivein-post { position: relative; display: inline-block; width: 7px; height: 44px; background: #1B2142; border-radius: 0 0 2px 2px; vertical-align: top; }
+.drivein-post.l { margin-left: 46px; } .drivein-post.r { margin-left: 137px; }
 .beam { position: absolute; width: 300px; height: 70px; margin-top: -35px; transform-origin: 0 50%; pointer-events: none; mix-blend-mode: screen;
   background: linear-gradient(90deg, rgba(255,226,170,.45), rgba(255,226,170,0)); clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 54%); animation: sweep 9s linear infinite; }
 @keyframes sweep { to { transform: rotate(360deg); } }
@@ -3410,7 +3420,7 @@ body:not(.editing) #game .hb-tiles .game-card { flex: 0 0 calc((100% - 64px) / 5
    "animation": {
     "x": 1020,
     "y": 420,
-    "region": "Uncharted Isle",
+    "region": "Drive-in Isle",
     "glyph": "film"
    },
    "environments": {
@@ -3695,10 +3705,6 @@ function buildTerrain() {
       <path d="M-8,-7V7M0,-7V7M8,-7V7" stroke-width="1.2" stroke-opacity=".5"/><path d="M-20,-10H20M-20,10H20" stroke-width="2.4"/></g>`;
   });
 
-  // the uncharted isle is hatched over, the old way of marking the unknown
-  const north = ISLANDS.find(I => I.id === 'north');
-  s += `<path d="${blobPath(north, 55)}" fill="url(#hatchSea)" stroke="${PAL.paper}" stroke-opacity=".6" stroke-width="2" stroke-dasharray="10 8"/>`;
-
   // compass
   s += `<g transform="translate(200 2010)" fill="none" stroke="${PAL.paper}" stroke-width="2"><circle r="40"/><path d="M0,-52V52M-52,0H52"/><path d="M0,-40L8,0L0,40L-8,0Z" fill="${PAL.paper}"/><path d="M0,40L8,0L-8,0Z" fill="${PAL.sea}"/>
     <text y="-62" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="${PAL.paper}" stroke="none">N</text></g>`;
@@ -3764,6 +3770,10 @@ world.innerHTML = `
   <img class="outer-img" src="${outerURL}" alt="" draggable="false" style="left:${OUT.x}px;top:${OUT.y}px;width:${OUT.w}px;height:${OUT.h}px">
   <img class="terrain-img" src="${terrainURL}" alt="" draggable="false">
   <div class="inferno-glow" style="left:${MAP.places.game.x}px;top:${MAP.places.game.y + 46}px"></div>
+  <div class="drivein" style="left:${MAP.places.animation.x}px;top:${MAP.places.animation.y - 92}px" aria-hidden="true">
+    <div class="drivein-screen"><video src="assets/animation/dream-16.mp4" poster="assets/animation/dream-16.jpg" muted loop playsinline preload="none" disablepictureinpicture></video></div>
+    <i class="drivein-post l"></i><i class="drivein-post r"></i>
+  </div>
   <div class="beam" style="left:${MAP.extra[1].x + 21}px;top:${MAP.extra[1].y - 84}px"></div>
   <div class="lamp" style="left:${MAP.extra[1].x + 21}px;top:${MAP.extra[1].y - 84}px"></div>
   <div class="cartouche" style="left:2380px;top:250px"><b>${esc(MAP.worldName)}</b><span>${esc(MAP.worldSub)}</span></div>
@@ -3771,6 +3781,12 @@ world.innerHTML = `
   <canvas id="tracks" width="1600" height="1100" style="width:${MAP.W}px;height:${MAP.H}px"></canvas>
   <div id="pins"></div>
   <div class="car" id="car"></div>`;
+
+// the drive-in plays only while it's actually on screen (and never with reduced motion: the poster frame stays)
+(() => {
+  const v = $('.drivein video', world); if (!v || reduce || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }).observe(v);
+})();
 
 function renderPins() {
   makePlaces();
