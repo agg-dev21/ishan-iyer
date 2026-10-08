@@ -4018,7 +4018,9 @@ function selectPlace(id, fly = true) {
   const p = PLACES.find(x => x.id === id); if (!p) return;
   current = p;
   $$('#legend button').forEach(b => b.classList.toggle('on', b.dataset.id === id));
-  const cov = getSingle('cover:' + p.id) || { img: '', title: p.label };
+  let cov = getSingle('cover:' + p.id) || { img: '', title: p.label };
+  if (p.id === 'about' && !cov.img && SITE.photo && SITE.photo.img) cov = SITE.photo;   // About Me shows Ishan's photo
+
   $('#locHero').innerHTML = slot({ ...cov, title: p.label + ' cover' }) + (EDIT.on ? tools('S|cover:' + p.id) : '');
   $('#locHero').classList.toggle('ed-host', EDIT.on); EDIT.on ? $('#locHero').dataset.ref = 'S|cover:' + p.id : delete $('#locHero').dataset.ref;
   $('#locRegion').textContent = p.label !== p.title ? `${p.region} · ${p.title}` : p.region;
@@ -4270,7 +4272,7 @@ function renderAbout() {
     <div class="topbar">${topbar('about', 'About Me', S.roleShort)}</div>
     <div class="page-scroll"><div class="page-inner about-grid">
       <div class="about-photo">
-        <div class="ph-box" style="position:relative">${single('photo', S.photo)}</div>
+        <div class="ph-box" style="position:relative${S.photo.img ? ';cursor:zoom-in' : ''}" ${S.photo.img ? `data-lb tabindex="0" role="button" aria-label="View ${esc(S.name)}'s photo full size"` : ''}>${single('photo', S.photo)}</div>
         <div class="stat-list"><div><span>Based in</span>${esc(S.location)}</div><div><span>Focus</span>2D animation & concept design</div><div><span>Handle</span>@${esc(S.handle)}</div></div>
       </div>
       <div>
@@ -4284,6 +4286,7 @@ function renderAbout() {
         ${S.credit ? `<p class="site-credit">Site designed &amp; built by <a href="${esc(S.credit.url)}" ${ext(S.credit.url)}>${esc(S.credit.name)} ↗</a></p>` : ''}
       </div>
     </div></div>`;
+  wireCards(el, [S.photo], () => S.name);
   keep();
 }
 
