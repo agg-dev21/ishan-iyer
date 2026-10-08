@@ -1860,6 +1860,68 @@ body:not(.editing) #game .hb-tiles .game-card { flex: 0 0 calc((100% - 64px) / 5
 .lightbox.zoomed .lb-info { opacity: .5; }
 #lbStage img.lb-img { max-width: none; max-height: none; }
 #lbStage video.lb-img { max-width: calc(100vw - 150px); max-height: calc(100vh - 120px); }
+/* ════════════════════════════
+   PHONES (≤700px): simple, readable, no map
+════════════════════════════ */
+.m-home, .m-gate { display: none; }
+@media (max-width: 700px) {
+  /* top bar: name on the left, menu + Contact on the right */
+  .topbar, #home .topbar { padding: 0 8px 0 14px !important; gap: 6px; }
+  .topbar-nav, .tb-sep, .tb-page { display: none !important; }
+  .tb-brand { min-width: 0; flex: 1; }
+  .tb-cta { order: 3; margin-left: 0; height: 34px; padding: 0 12px; }
+  .hamburger { display: flex !important; order: 4; padding: 10px; }
+  #home .topbar { background: var(--chrome) !important; }
+
+  /* home: the list page replaces the map and its panels */
+  #home #mapPort, .home-hud, .loc, .map-ctrl, .drive-hint, .minimap { display: none !important; }
+  .m-home { display: block; position: absolute; inset: 0; padding-top: 56px; overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg2); }
+  .m-inner { padding: 28px 16px 48px; }
+  .m-hero { padding-bottom: 8px; }
+  .m-avatar { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; margin-bottom: 16px; box-shadow: 0 0 0 1px var(--line-2); }
+  .m-avatar img { width: 100%; height: 100%; display: block; }
+  .m-name { font: 700 34px/1.05 var(--ui); letter-spacing: -.02em; margin: 6px 0 12px; color: var(--text); }
+  .m-intro { font-size: 15px; line-height: 1.6; color: var(--text-dim); margin: 0 0 20px; }
+  .m-actions { display: flex; gap: 8px; }
+  .m-actions .chip { flex: 1; justify-content: center; text-decoration: none; }
+  .m-label { margin: 32px 0 12px; font: 600 11px/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--text-mute); }
+  .m-list { display: flex; flex-direction: column; gap: 10px; }
+  .m-card { display: flex; align-items: center; gap: 14px; padding: 8px; padding-right: 14px; border-radius: 14px; background: var(--fill-1); box-shadow: 0 0 0 1px var(--line) inset; color: var(--text); text-decoration: none; }
+  .m-card:active { background: var(--fill-2); }
+  .m-thumb { position: relative; width: 84px; height: 64px; flex-shrink: 0; border-radius: 10px; overflow: hidden; display: grid; place-items: center; background: var(--fill-2); }
+  .m-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .m-icon { font-size: 26px; }
+  .m-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .m-txt b { font: 600 15px/1.25 var(--ui); }
+  .m-txt span { font-size: 13px; color: var(--text-mute); }
+  .m-arrow { color: var(--text-mute); }
+  .m-links { flex-wrap: wrap; }
+
+  /* class work: the project list becomes one swipeable row of pills */
+  .cw-sidebar { display: flex !important; flex-direction: row; align-items: center; gap: 8px; max-height: none !important; height: auto !important; overflow-x: auto; overflow-y: hidden; padding: 12px 16px !important; scrollbar-width: none; flex-shrink: 0; }
+  .cw-sidebar::-webkit-scrollbar { display: none; }
+  .cw-sidebar-label { display: none !important; }
+  .cw-sidebar .adobe-btn { flex-shrink: 0; margin: 0 !important; padding: 9px 14px !important; border-radius: 999px !important; }
+  .cw-sidebar .adobe-btn span { display: none; }
+  .cw-proj-btn { flex-shrink: 0; width: auto !important; padding: 9px 14px !important; border: 0 !important; border-radius: 999px !important; background: var(--fill-2) !important; }
+  .cw-proj-btn.active { background: #F2F2F4 !important; }
+  .cw-proj-btn.active .cw-proj-btn-title { color: #0E1118 !important; }
+  .cw-proj-btn-title { white-space: nowrap; font-size: 13px !important; }
+  .cw-proj-btn-sub { display: none !important; }
+  /* Heartbreaker's region tabs: one swipeable row too */
+  .game-filters { flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; }
+  .game-filters::-webkit-scrollbar { display: none; }
+  .game-filter { flex-shrink: 0; white-space: nowrap; }
+  .m-links .chip { text-decoration: none; }
+
+  /* "best on a laptop" note shown before the site */
+  .m-gate { display: grid; place-items: center; position: fixed; inset: 0; z-index: 20000; padding: 24px; background: rgba(8,11,18,.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .m-gate-card { max-width: 340px; text-align: center; color: var(--text); }
+  .m-gate-icon { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--fill-2); margin-bottom: 18px; color: var(--text); }
+  .m-gate h2 { font: 700 22px/1.2 var(--ui); margin: 0 0 10px; }
+  .m-gate p { font-size: 15px; line-height: 1.6; color: var(--text-dim); margin: 0 0 24px; }
+  .m-gate .chip { width: 100%; justify-content: center; height: 44px; }
+}
 </style>
 </head>
 <body>
@@ -1907,6 +1969,8 @@ body:not(.editing) #game .hb-tiles .game-card { flex: 0 0 calc((100% - 64px) / 5
 <!-- ══ HOME MAP ══ -->
 <div class="screen" id="home">
   <div class="topbar" data-topbar="home"></div>
+  <!-- phones get this simple page instead of the map -->
+  <div class="m-home" id="mHome"></div>
   <div id="mapPort">
     <div class="map-world" id="world"></div>
     <canvas id="fx" aria-hidden="true"></canvas>
@@ -3441,7 +3505,42 @@ $('#menuLinks').innerHTML = `
   <div class="menu-section-label">Projects</div>
   ${CATEGORIES.map(c => `<a class="menu-link" style="text-decoration:none" href="#/${c.slug}"><div class="menu-link-icon">${c.icon}</div>${esc(c.title)}${countOf(c) === 'coming soon' ? '<span class="menu-link-soon">coming soon</span>' : ''}<span class="menu-link-arrow">→</span></a>`).join('')}`;
   $('[data-topbar="home"]').innerHTML = topbar('home', SITE.name, 'Portfolio · ' + SITE.handle);
+  renderMobileHome();
 }
+
+/* ---------- phones: a plain scrolling home page instead of the map ---------- */
+const isPhone = () => matchMedia('(max-width: 700px)').matches;
+function renderMobileHome() {
+  const S = SITE;
+  $('#mHome').innerHTML = `<div class="m-inner">
+    <div class="m-hero">
+      ${S.photo && S.photo.img ? `<div class="m-avatar"><img src="${esc(S.photo.img)}" alt="" style="${imgStyle(S.photo)}"></div>` : ''}
+      <div class="page-kicker">${esc(S.role)}</div>
+      <h1 class="m-name">${esc(S.name)}</h1>
+      <p class="m-intro">${esc(S.intro)}</p>
+      <div class="m-actions"><a class="chip solid" href="#/about">About me</a><a class="chip" href="#/contact">Contact</a></div>
+    </div>
+    <div class="m-label">Projects</div>
+    <div class="m-list">${CATEGORIES.map(c => { const cov = getSingle('cover:' + c.slug) || {};
+      return `<a class="m-card" href="#/${c.slug}"><div class="m-thumb ph-box">${cov.img ? slot({ ...cov, title: c.title }) : `<span class="m-icon">${c.icon}</span>`}</div>
+        <div class="m-txt"><b>${esc(c.title)}</b><span>${esc(countOf(c))}</span></div><span class="m-arrow">→</span></a>`; }).join('')}</div>
+    <div class="m-label">Elsewhere</div>
+    <div class="hud-links m-links"><a class="chip" href="${esc(mailHref)}">Email</a>${S.links.map(l => `<a class="chip" href="${esc(l.url)}" ${ext(l.url)}>${esc(l.label)}</a>`).join('')}</div>
+  </div>`;
+}
+// before anything opens on a phone: a gentle note that the full experience is on a laptop (once per visit)
+(function phoneNotice() {
+  if (!isPhone()) return;
+  try { if (sessionStorage.getItem('ishan-phone-ok') === '1') return; } catch (e) {}
+  document.body.insertAdjacentHTML('beforeend', `<div class="m-gate" id="mGate" role="dialog" aria-modal="true" aria-labelledby="mGateH">
+    <div class="m-gate-card">
+      <div class="m-gate-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg></div>
+      <h2 id="mGateH">Best on a laptop</h2>
+      <p>This portfolio is built around an interactive map that works best on a bigger screen. On a phone you'll get a simpler version.</p>
+      <button class="chip solid" id="mGateGo">Continue on phone</button>
+    </div></div>`);
+  $('#mGateGo').addEventListener('click', () => { try { sessionStorage.setItem('ishan-phone-ok', '1'); } catch (e) {} $('#mGate').remove(); });
+})();
 bindStatic();
 
 /* ---------- topbars (same on every screen) ---------- */
@@ -4554,7 +4653,7 @@ function landing(fromMap = false) {
   requestAnimationFrame(frame);
 }
 // only on the front door: a shared link straight to a page (#/game, #/about...) opens that page right away
-if (!location.hash.replace(/^#\/?/, '')) landing();
+if (!location.hash.replace(/^#\/?/, '') && !isPhone()) landing();   // phones skip the dive: they get the simple home page
 $('#driveBack').addEventListener('click', () => { closeLoc(); Object.keys(keys).forEach(k => keys[k] = false); landing(true); });
 
 let firstRoute = true;
