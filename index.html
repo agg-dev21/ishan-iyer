@@ -3862,8 +3862,15 @@ function driveTick(now) {
     car.lat += (-car.steer * car.v * .045 - car.lat) * Math.min(1, .12 * dt);
     const ch0 = Math.cos(car.h), sh0 = Math.sin(car.h);
     car.x += (ch0 * car.v - sh0 * car.lat) * sc * dt; car.y += (sh0 * car.v + ch0 * car.lat) * sc * dt;
-    const x0 = OUT.x + 120, x1 = OUT.x + OUT.w - 120, y0 = OUT.y + 120, y1 = OUT.y + OUT.h - 120;
-    if (car.x < x0 || car.x > x1 || car.y < y0 || car.y > y1) { car.x = clamp(car.x, x0, x1); car.y = clamp(car.y, y0, y1); car.v *= -.3; }
+    // just past the farthest the camera can pan (see applyT), so the car slides off screen before it wraps
+    const x0 = -1160, x1 = MAP.W + 1160, y0 = -1160, y1 = MAP.H + 1160;
+    // no walls: drive off one edge of the sea and come back in on the opposite side
+    const wx = car.x < x0 ? x1 - x0 : car.x > x1 ? x0 - x1 : 0, wy = car.y < y0 ? y1 - y0 : car.y > y1 ? y0 - y1 : 0;
+    if (wx || wy) {
+      car.x += wx; car.y += wy; trackPrev = null;
+      car.target = null;
+      if (camFollow) { tx -= wx * z; ty -= wy * z; applyT(); }      // the view jumps with the car instead of sweeping across the map
+    }
 
     carEl.style.left = car.x + 'px'; carEl.style.top = car.y + 'px'; carEl.style.zIndex = Math.round(car.y) + 2;
     carEl.style.setProperty('--h', (car.h + car.steer * Math.min(1, Math.abs(car.v) / max) * .12) + 'rad'); carEl.classList.toggle('water', water);
