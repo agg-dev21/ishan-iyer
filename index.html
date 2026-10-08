@@ -1205,6 +1205,9 @@ body.editing .wp .wp-pin::after { content: ''; position: absolute; inset: -6px; 
 .stat-list { margin-top: 14px; border-top: 1px solid var(--border); }
 .stat-list div { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
 .stat-list span { color: var(--text-mute); }
+.site-credit a { color: var(--text-dim); text-decoration: none; }
+.site-credit a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+.site-credit { margin: 8px 0 0; padding-top: 18px; border-top: 1px solid var(--line-soft, var(--border)); font-size: 12px; color: var(--text-mute); }
 .a-block { padding: 24px 0; border-top: 1px solid var(--border); }
 .a-block:first-of-type { border-top: 0; padding-top: 28px; }
 .a-label { font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
@@ -1974,6 +1977,10 @@ body:not(.editing) #game .hb-tiles .game-card { flex: 0 0 calc((100% - 64px) / 5
   "intro": "Animator and concept designer from Mumbai, studying at SCAD. I design characters, creatures, and the worlds they live in.",
   "email": "theishaniyer@gmail.com",
   "location": "SCAD · from Mumbai",
+  "credit": {
+   "name": "Anish Goel",
+   "url": "https://www.linkedin.com/in/anishg-design/"
+  },
   "photo": {
    "img": "assets/about/photo.webp",
    "title": "Ishan Iyer",
@@ -4244,6 +4251,7 @@ function renderAbout() {
         <div class="a-block"><div class="a-label">Skills</div><div class="tags">${S.skills.map(s => `<span>${esc(s)}</span>`).join('')}</div></div>
         <div class="a-block"><div class="a-label">Software</div><div class="tags">${S.software.map(s => `<span>${esc(s)}</span>`).join('')}</div></div>
         <div class="a-block"><div class="a-label">Contact</div><div class="hud-links"><a class="chip solid" href="${esc(mailHref)}">${esc(S.email)}</a>${S.links.map(l => `<a class="chip" href="${esc(l.url)}" ${ext(l.url)}>${esc(l.label)}</a>`).join('')}</div></div>
+        ${S.credit ? `<p class="site-credit">Site designed &amp; built by <a href="${esc(S.credit.url)}" ${ext(S.credit.url)}>${esc(S.credit.name)} ↗</a></p>` : ''}
       </div>
     </div></div>`;
   keep();
