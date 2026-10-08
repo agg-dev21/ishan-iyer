@@ -1684,8 +1684,8 @@ html, body { font-family: var(--ui); letter-spacing: -.01em; }
 .ld-cue i { width: 22px; height: 34px; border: 2px solid currentColor; border-radius: 12px; position: relative; }
 .ld-cue i::after { content: ''; position: absolute; left: 50%; top: 6px; width: 4px; height: 7px; margin-left: -2px; border-radius: 2px; background: currentColor; animation: ldCue 1.6s ease-in-out infinite; }
 @keyframes ldCue { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(12px); opacity: 0; } 100% { opacity: 0; } }
-.ld-skip { position: absolute; top: 22px; right: 24px; background: none; border: 0; color: #1B2142; font: 600 12px/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; opacity: .6; }
-.ld-skip:hover { opacity: 1; }
+.ld-skip { position: absolute; top: 18px; right: 20px; background: rgba(27,33,66,.08); border: 1px solid currentColor; border-radius: 999px; padding: 9px 16px; color: #1B2142; font: 600 12px/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; opacity: .85; transition: opacity .2s, background .2s; }
+.ld-skip:hover { opacity: 1; background: rgba(27,33,66,.16); }
 
 /* while diving, the interface waits; it fades in as you settle on the map */
 #home .topbar, .home-hud, .map-ctrl, .drive-hint { transition: opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1); }
@@ -1768,6 +1768,92 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
 .proj-cap:has(> span:empty):not(:has(.proj-more)) { display: none; }
 .proj-status { align-self: center; padding: 5px 10px; border-radius: 980px; font: 600 11.5px/1 var(--ui); color: #F0A35E; background: rgba(240,163,94,.12); box-shadow: 0 0 0 1px rgba(240,163,94,.3) inset; }
 .proj-status::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: currentColor; vertical-align: 1px; }
+.hb-feature { margin: 36px 0 8px; }
+.hb-feature .proj { border-top: 0; padding-top: 0; }
+.hb-feature .proj-num { display: none; }
+.hb-feature .proj-head { justify-content: center; }
+.hb-feature .proj-main { max-width: 760px; max-height: 70vh; }
+.hb-feature .proj-cap { max-width: 760px; margin-left: auto; margin-right: auto; }
+.proj.static .proj-more { display: none; }
+.proj.static .proj-main { cursor: zoom-in; }
+.proj.static .proj-rest .game-card { opacity: 1; transform: none; transition: none; }
+body:not(.editing) .hb-tiles .game-grid-editorial { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px 14px; align-items: end; }
+body:not(.editing) .hb-tiles .game-card { grid-column: span 1 !important; }
+
+/* ── Heartbreaker page polish ── */
+#game .region { padding-top: 88px; }
+#game .region + .region { border-top: 1px solid var(--line-soft); margin-top: 72px; }
+#game .region-text { margin-bottom: 4px; }
+#game .sub-label { margin: 48px 0 18px; }
+/* character showcase: modest centred hero, title centred above it */
+.hb-feature { margin: 56px 0 0; }
+.hb-feature + .hb-feature, .hb-feature .proj + .proj { margin-top: 0; }
+.hb-feature .proj { padding: 0 0 8px; }
+.hb-feature .proj + .proj { padding-top: 72px; }
+.hb-feature .proj-head { flex-direction: column; align-items: center; gap: 6px; margin-bottom: 22px; text-align: center; }
+.hb-feature .proj-title { font-size: 26px; }
+.hb-feature .proj-count { margin: 0; }
+.hb-feature .proj-main { width: min(520px, 100%); max-height: 52vh; border-radius: 16px; }
+.proj.static .proj-cap { display: none; }
+/* sprite sheets: one even grid of square tiles */
+body:not(.editing) #game .hb-feature .proj-rest > .game-grid-editorial,
+body:not(.editing) #game .region > .game-grid-editorial:not(.hb-bg) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 16px; align-items: start; }
+body:not(.editing) #game .hb-feature .game-card,
+body:not(.editing) #game .region > .game-grid-editorial:not(.hb-bg) .game-card,
+body:not(.editing) #game .hb-tiles .game-card { grid-column: span 1 !important; }
+body:not(.editing) #game .hb-feature .game-card-img-wrap,
+body:not(.editing) #game .region > .game-grid-editorial:not(.hb-bg) .game-card-img-wrap,
+body:not(.editing) #game .hb-tiles .game-card-img-wrap { aspect-ratio: 1 / 1 !important; border-radius: 12px; }
+#game .hb-feature .game-card-img, #game .region > .game-grid-editorial:not(.hb-bg) .game-card-img, #game .hb-tiles .game-card-img { object-fit: contain !important; padding: 8%; }
+#game .hb-feature .proj-rest > .game-grid-editorial { padding-top: 36px; }
+#game .game-card-info { padding-top: 10px; }
+#game .game-card-title { font-size: 13px; color: var(--text-dim); font-weight: 500; }
+#game .game-card-line { font-size: 12px; color: var(--text-mute); }
+body:not(.editing) #game .hb-tiles .game-grid-editorial { align-items: start; }
+/* centre short rows so they line up under the centred showcase */
+body:not(.editing) #game .hb-feature .proj-rest > .game-grid-editorial,
+body:not(.editing) #game .region > .game-grid-editorial:not(.hb-bg),
+body:not(.editing) #game .hb-tiles .game-grid-editorial { display: flex; flex-wrap: wrap; justify-content: center; column-gap: 16px; }
+body:not(.editing) #game .hb-feature .proj-rest .game-card,
+body:not(.editing) #game .region > .game-grid-editorial:not(.hb-bg) .game-card { flex: 0 0 calc((100% - 48px) / 4); }
+body:not(.editing) #game .hb-tiles .game-card { flex: 0 0 calc((100% - 64px) / 5); }
+
+/* ── Viewer zoom ── */
+#lbStage { overflow: hidden; border-radius: var(--radius-sm); touch-action: none; }
+#lbStage img.lb-img { transform-origin: 50% 50%; will-change: transform; user-select: none; -webkit-user-drag: none; cursor: zoom-in; }
+.lightbox.zoomed .lb-info, .lightbox.zoomed .lb-nav { opacity: .25; transition: opacity .3s; }
+.lightbox.zoomed .lb-info:hover, .lightbox.zoomed .lb-nav:hover { opacity: 1; }
+.lb-zoom { display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 10px; background: rgba(20,24,34,.85); border: 1px solid rgba(255,255,255,.08); font: 500 12px/1 var(--ui); color: var(--text-dim); }
+.lb-zoom button { min-width: 30px; height: 28px; padding: 0 8px; border: 0; border-radius: 7px; background: none; color: var(--text); font: 600 15px/1 var(--ui); cursor: pointer; }
+.lb-zoom button:hover { background: rgba(255,255,255,.1); }
+.lb-zoom .lb-zfit { font-size: 12px; }
+#lbZoomPct { min-width: 44px; text-align: center; font-variant-numeric: tabular-nums; }
+.lb-zhint { padding: 0 8px 0 6px; color: var(--text-mute); border-left: 1px solid rgba(255,255,255,.08); margin-left: 4px; }
+.lightbox:has(video) .lb-zoom { display: none; }
+
+/* ── Full-screen viewer: the image gets the whole window, controls float on top ── */
+.lightbox { background: rgba(6,9,16,.97); }
+.lb-inner { width: 100vw; height: 100vh; max-width: none; max-height: none; gap: 0; display: block; }
+#lbStage { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 0; }
+#lbStage .lb-img { max-width: calc(100vw - 160px); max-height: calc(100vh - 150px); border: 0; border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+#lbStage .lb-ph { max-width: calc(100vw - 160px); }
+.lb-close { top: 18px; right: 20px; z-index: 3; width: 40px; height: 40px; background: rgba(20,24,34,.85); border-color: rgba(255,255,255,.1); }
+.lb-info { position: absolute; top: 22px; left: 24px; z-index: 3; text-align: left; pointer-events: none; }
+.lb-title { font: 600 15px/1.3 var(--ui); }
+.lb-tag { letter-spacing: .08em; }
+.lb-zoom { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 3; }
+.lb-nav { position: absolute; inset: 0; margin: 0; pointer-events: none; z-index: 2; }
+.lb-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); pointer-events: auto; width: 48px; height: 48px; padding: 0; border-radius: 50%;
+  font-size: 0; background: rgba(20,24,34,.8); border-color: rgba(255,255,255,.1); }
+.lb-nav-btn::before { font-size: 20px; color: var(--text); }
+#lbPrev { left: 22px; } #lbPrev::before { content: '←'; }
+#lbNext { right: 22px; } #lbNext::before { content: '→'; }
+.lb-nav-btn:hover { background: rgba(40,46,60,.95); border-color: rgba(255,255,255,.25); }
+.lightbox.zoomed .lb-nav-btn { opacity: .35; } .lightbox.zoomed .lb-nav-btn:hover { opacity: 1; }
+.lightbox.zoomed .lb-nav { opacity: 1; }
+.lightbox.zoomed .lb-info { opacity: .5; }
+#lbStage img.lb-img { max-width: none; max-height: none; }
+#lbStage video.lb-img { max-width: calc(100vw - 150px); max-height: calc(100vh - 120px); }
 </style>
 </head>
 <body>
@@ -1796,6 +1882,11 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
   <div class="lb-inner">
     <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
     <div id="lbStage"></div>
+    <div class="lb-zoom" id="lbZoom">
+      <button id="lbZOut" aria-label="Zoom out">−</button><span id="lbZoomPct">100%</span><button id="lbZIn" aria-label="Zoom in">+</button>
+      <button id="lbZFit" class="lb-zfit" aria-label="Fit to screen">Fit</button>
+      <span class="lb-zhint">Scroll or click to zoom · drag to move</span>
+    </div>
     <div class="lb-info">
       <div class="lb-title" id="lbTitle"></div>
       <div class="lb-tag" id="lbTag"></div>
@@ -1878,18 +1969,30 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
  "site": {
   "name": "Ishan Iyer",
   "handle": "mossy_art13",
-  "role": "Character design · Concept art · Animation",
-  "roleShort": "Character & concept artist",
-  "intro": "Visual artist and worldbuilder. I design characters, creatures, and the worlds they live in, drawing from myth, fantasy, gacha, and game concept art.",
-  "email": "[your.email@example.com]",
-  "location": "[City]",
+  "role": "Animation · Concept design",
+  "roleShort": "Animator & concept designer",
+  "intro": "Animator and concept designer from Mumbai, studying at SCAD. I design characters, creatures, and the worlds they live in.",
+  "email": "theishaniyer@gmail.com",
+  "location": "SCAD · from Mumbai",
   "photo": {
-   "img": "",
-   "title": "Your photo",
+   "img": "assets/about/photo.webp",
+   "title": "Ishan Iyer",
    "fit": "cover",
-   "pos": "50% 50%"
+   "pos": "68% 52%"
   },
   "links": [
+   {
+    "label": "Behance",
+    "short": "Bē",
+    "handle": "ishaniyer12",
+    "url": "https://www.behance.net/ishaniyer12"
+   },
+   {
+    "label": "ArtStation",
+    "short": "Art",
+    "handle": "ishiyhu7",
+    "url": "https://www.artstation.com/ishiyhu7"
+   },
    {
     "label": "Instagram",
     "short": "IG",
@@ -1901,30 +2004,26 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
     "short": "Adobe",
     "handle": "isiyer20.myportfolio.com",
     "url": "https://isiyer20.myportfolio.com/portfolio-page"
-   },
-   {
-    "label": "[ArtStation]",
-    "short": "Art",
-    "handle": "[@handle]",
-    "url": "#"
    }
   ],
-  "bio": "[Two or three sentences introducing yourself: who you are, what you make, and what you are working toward.]",
+  "bio": "Hallo! I'm Ishan, an animator and concept designer. Born in Mumbai and currently studying at SCAD.",
   "background": [
    "[How you got into art: what you drew growing up and what pulled you toward characters, creatures, and games.]",
    "[What you focus on now and where you want to take it.]"
   ],
   "education": [
    {
-    "what": "[Degree and major]",
-    "where": "[School]",
-    "when": "[Years]"
+    "what": "BFA in Animation",
+    "where": "SCAD (Savannah College of Art and Design)",
+    "when": ""
    }
   ],
   "inspirations": [
    "[The artists, games, myths, books, and films that shape your work.]"
   ],
   "skills": [
+   "2D animation",
+   "Concept design",
    "Character design",
    "Creature design",
    "Game concept art",
@@ -1934,11 +2033,12 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
    "Thumbnailing"
   ],
   "software": [
-   "[Procreate]",
-   "[Photoshop]",
-   "Piskel",
-   "Pixilart",
-   "[Clip Studio Paint]"
+   "Procreate",
+   "Procreate Dreams",
+   "Photoshop",
+   "Illustrator",
+   "Blender",
+   "Maya"
   ]
  },
  "heartbreaker": {
@@ -1953,84 +2053,22 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
    "pos": "50% 60%",
    "pixel": true
   },
+  "moodboard": {
+   "img": "assets/game/moodboard.webp",
+   "title": "Moodboard",
+   "line": "Visual references for Heartbreaker's palette, creatures and world.",
+   "span": 3,
+   "ratio": "1920/1080",
+   "fit": "cover",
+   "pos": "50% 50%"
+  },
   "regions": [
    {
     "num": 0,
     "name": "Region 0",
     "sub": "The descent begins",
     "text": "[Explain Region 0: where the player starts, the mood, and how it sets up the journey down.]",
-    "background": {
-     "img": "assets/game/region0-background.png",
-     "title": "Region 0 background",
-     "line": "The backdrop for the opening area.",
-     "span": 3,
-     "ratio": "600/150",
-     "fit": "contain",
-     "pos": "50% 50%",
-     "pixel": true
-    },
-    "characters": [
-     {
-      "img": "assets/game/main-character-sprite-sheet.png",
-      "title": "Main character: sprite sheet",
-      "line": "Every movement and action frame for the player.",
-      "span": 2,
-      "ratio": "1440/810",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/main-character-frames.png",
-      "title": "Main character: close-up frames",
-      "line": "",
-      "span": 1,
-      "ratio": "480/480",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/main-character-attack.png",
-      "title": "Main character: attack",
-      "line": "",
-      "span": 1,
-      "ratio": "720/960",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/region0-enemy.png",
-      "title": "Region 0 enemy",
-      "line": "A common enemy met in the opening regions.",
-      "span": 1,
-      "ratio": "720/720",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/small-sprite.png",
-      "title": "Small sprite",
-      "line": "",
-      "span": 1,
-      "ratio": "50/50",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/player-health-bar.png",
-      "title": "Player health bar",
-      "line": "HUD element tracking the player's health.",
-      "span": 1,
-      "ratio": "100/100",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     }
-    ],
+    "characters": [],
     "environment": [
      {
       "img": "assets/game/road-tilemap.png",
@@ -2051,167 +2089,7 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
       "fit": "contain",
       "pos": "50% 50%",
       "pixel": true
-     }
-    ]
-   },
-   {
-    "num": 1,
-    "name": "Region 1",
-    "sub": "The Heart Reaper",
-    "text": "[Explain Region 1: which layer it maps to and what the player faces here.]",
-    "characters": [
-     {
-      "img": "assets/game/heart-reaper-mini-boss.png",
-      "title": "Heart Reaper: mini boss",
-      "line": "Region 1's mini boss.",
-      "span": 1,
-      "ratio": "200/300",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
      },
-     {
-      "img": "assets/game/heart-reaper-weapon.png",
-      "title": "Heart Reaper with weapon",
-      "line": "The Reaper with its weapon drawn.",
-      "span": 1,
-      "ratio": "200/200",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/heart-reaper-attack-1.png",
-      "title": "Heart Reaper: attack 1",
-      "line": "",
-      "span": 1,
-      "ratio": "300/300",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/heart-reaper-attack-2.png",
-      "title": "Heart Reaper: attack 2",
-      "line": "",
-      "span": 1,
-      "ratio": "300/300",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/heart-reaper-attack-3.png",
-      "title": "Heart Reaper: attack 3",
-      "line": "",
-      "span": 1,
-      "ratio": "200/300",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/heart-reaper-scythe.png",
-      "title": "Heart Reaper: scythe attack",
-      "line": "",
-      "span": 1,
-      "ratio": "200/300",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/heart-reaper-attack-2-fx.png",
-      "title": "Attack 2 effects",
-      "line": "Visual effects layered over the Reaper's attacks.",
-      "span": 1,
-      "ratio": "720/960",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/heart-reaper-attack-3-fx.png",
-      "title": "Attack 3 effects",
-      "line": "",
-      "span": 1,
-      "ratio": "1800/1800",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/boss-health-bar.png",
-      "title": "Boss health bar",
-      "line": "Shown across the top during the Reaper fight.",
-      "span": 1,
-      "ratio": "100/100",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/region1-cat-demon.png",
-      "title": "Region 1 concept",
-      "line": "",
-      "span": 1,
-      "ratio": "100/200",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/region1-cat-demon-frames-1.png",
-      "title": "Region 1 concept: frames",
-      "line": "",
-      "span": 1,
-      "ratio": "480/480",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/region1-cat-demon-frames-2.png",
-      "title": "Region 1 concept: more frames",
-      "line": "",
-      "span": 1,
-      "ratio": "480/720",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/region1-gargoyle.png",
-      "title": "Region 1 design",
-      "line": "",
-      "span": 1,
-      "ratio": "200/300",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/region1-gargoyle-frames.png",
-      "title": "Region 1 design: frames",
-      "line": "",
-      "span": 1,
-      "ratio": "100/200",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     },
-     {
-      "img": "assets/game/region1-flying-sprites.png",
-      "title": "Flying sprites",
-      "line": "",
-      "span": 1,
-      "ratio": "200/200",
-      "fit": "contain",
-      "pos": "50% 50%",
-      "pixel": true
-     }
-    ],
-    "environment": [
      {
       "img": "assets/game/tilemap-2.png",
       "title": "Tilemap 2",
@@ -2242,6 +2120,225 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
       "pos": "50% 50%",
       "pixel": true
      }
+    ],
+    "feature": [
+     {
+      "img": "assets/game/main-character-frames.png",
+      "title": "Main character",
+      "line": "",
+      "span": 1,
+      "ratio": "480/480",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Main character"
+     },
+     {
+      "img": "assets/game/main-character-attack.png",
+      "title": "Main character: attack",
+      "line": "",
+      "span": 1,
+      "ratio": "720/960",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Main character"
+     },
+     {
+      "img": "assets/game/player-health-bar.png",
+      "title": "Health bar",
+      "line": "",
+      "span": 1,
+      "ratio": "100/100",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Main character"
+     },
+     {
+      "img": "assets/game/main-character-sprite-sheet.png",
+      "title": "Main character: early sprite sheet",
+      "line": "An early version, before the final design.",
+      "span": 1,
+      "ratio": "1440/810",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Main character"
+     }
+    ]
+   },
+   {
+    "num": 1,
+    "name": "Region 1",
+    "sub": "The Heart Reaper",
+    "text": "[Explain Region 1: which layer it maps to and what the player faces here.]",
+    "characters": [
+     {
+      "img": "assets/game/region1-cat-demon.png",
+      "title": "Sprite 1",
+      "line": "",
+      "span": 1,
+      "ratio": "100/200",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true
+     },
+     {
+      "img": "assets/game/region1-cat-demon-frames-1.png",
+      "title": "Sprite 2",
+      "line": "",
+      "span": 1,
+      "ratio": "480/480",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true
+     },
+     {
+      "img": "assets/game/region1-cat-demon-frames-2.png",
+      "title": "Sprite 3",
+      "line": "",
+      "span": 1,
+      "ratio": "480/720",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true
+     }
+    ],
+    "environment": [],
+    "feature": [
+     {
+      "img": "assets/game/heart-reaper-weapon.png",
+      "title": "Heart Reaper",
+      "line": "",
+      "span": 1,
+      "ratio": "200/200",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/heart-reaper-attack-1.png",
+      "title": "Attack 1",
+      "line": "",
+      "span": 1,
+      "ratio": "300/300",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/heart-reaper-attack-2.png",
+      "title": "Attack 2",
+      "line": "",
+      "span": 1,
+      "ratio": "300/300",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/heart-reaper-mini-boss.png",
+      "title": "Attack 2: close-up",
+      "line": "",
+      "span": 1,
+      "ratio": "200/300",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/heart-reaper-attack-2-fx.png",
+      "title": "Attack 2: effects",
+      "line": "",
+      "span": 1,
+      "ratio": "720/960",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/heart-reaper-attack-3.png",
+      "title": "Attack 3",
+      "line": "",
+      "span": 1,
+      "ratio": "200/300",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/heart-reaper-attack-3-fx.png",
+      "title": "Attack 3: effects",
+      "line": "",
+      "span": 1,
+      "ratio": "1800/1800",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/heart-reaper-scythe.png",
+      "title": "Death",
+      "line": "",
+      "span": 1,
+      "ratio": "200/300",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/boss-health-bar.png",
+      "title": "Boss health bar",
+      "line": "",
+      "span": 1,
+      "ratio": "100/100",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Heart Reaper"
+     },
+     {
+      "img": "assets/game/region1-gargoyle-frames.png",
+      "title": "Dragon",
+      "line": "",
+      "span": 1,
+      "ratio": "100/200",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Dragon"
+     },
+     {
+      "img": "assets/game/region1-gargoyle.png",
+      "title": "Dragon: sprite sheet",
+      "line": "",
+      "span": 1,
+      "ratio": "200/300",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Dragon"
+     },
+     {
+      "img": "assets/game/region1-flying-sprites.png",
+      "title": "Dragon: flying sprites",
+      "line": "",
+      "span": 1,
+      "ratio": "200/200",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true,
+      "group": "Dragon"
+     }
     ]
    },
    {
@@ -2252,7 +2349,7 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
     "characters": [
      {
       "img": "assets/game/region2-knight-1.png",
-      "title": "Further region concept",
+      "title": "NPC concept",
       "line": "",
       "span": 1,
       "ratio": "200/150",
@@ -2262,10 +2359,30 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
      },
      {
       "img": "assets/game/region2-knight-2.png",
-      "title": "Further region concept, alternate",
+      "title": "NPC concept, alternate",
       "line": "",
       "span": 1,
       "ratio": "200/150",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true
+     },
+     {
+      "img": "assets/game/region0-enemy.png",
+      "title": "Enemy",
+      "line": "A common enemy met in the opening regions.",
+      "span": 1,
+      "ratio": "720/720",
+      "fit": "contain",
+      "pos": "50% 50%",
+      "pixel": true
+     },
+     {
+      "img": "assets/game/small-sprite.png",
+      "title": "Snake",
+      "line": "",
+      "span": 1,
+      "ratio": "50/50",
       "fit": "contain",
       "pos": "50% 50%",
       "pixel": true
@@ -2511,13 +2628,13 @@ video.lb-img { max-height: 78vh; max-width: min(1200px, 90vw); background: #000;
     },
     {
      "img": "assets/characters/sherlock-character.webp",
-     "title": "Sherlock project: character",
+     "title": "Sherlock Holmes: character concept",
      "line": "",
      "span": 1,
      "ratio": "1679/2200",
      "fit": "cover",
      "pos": "50% 50%",
-     "group": "Studies"
+     "group": "Sherlock Holmes: character concept"
     },
     {
      "img": "assets/characters/spider-verse-study.webp",
@@ -3919,6 +4036,8 @@ $('#teleport').onclick = () => teleport(current);
    ================================================================= */
 const ratioOf = it => it.ratio || '4/3';
 const spanOf = it => it.span || 1;
+// "[Write something here]" text left over from the template: hidden from visitors, still editable in edit mode
+const isPh = s => !s || /^\s*\[[^\]]*\]\s*$/.test(s);
 const ce = (ref, field, ph = '') => EDIT.on ? `contenteditable="true" spellcheck="false" data-ce="${ref}" data-field="${field}" data-ph="${esc(ph)}"` : '';
 
 function card(it, ref) {
@@ -3952,6 +4071,7 @@ function groupedGrid(key, items, layout) {
 }
 function wireProjects(root) {
   $$('.proj', root).forEach(sec => {
+    if (sec.classList.contains('static')) { const z = $('.proj-zoom', sec), mn = $('.proj-main', sec); mn.addEventListener('click', e => { if (!e.target.closest('.proj-zoom')) z.click(); }); return; }
     const more = $('.proj-more', sec), rest = $('.proj-rest', sec), main = $('.proj-main', sec);
     const toggle = (open = !sec.classList.contains('open')) => {
       if (!rest) return;
@@ -3990,16 +4110,24 @@ function renderGame() {
   const H = HEARTBREAKER, c = cat('game'), el = $('#game');
   const keep = keepScroll(el);
   const all = [], tags = [];
+  if (H.hero && H.hero.img) { all.push(H.hero); tags.push(H.title); }
+  if (H.moodboard) { all.push(H.moodboard); tags.push('Moodboard'); }
+  const moodHtml = H.moodboard ? `<section class="region" id="hb-mood"><div class="sub-label">Moodboard</div><div class="game-grid-editorial hb-bg">${card(H.moodboard, 'S|hbmood').replace('span-' + spanOf(H.moodboard), 'span-3')}</div></section>` : '';
   const regions = H.regions.map((r, ri) => {
-    const bg = r.background ? [r.background] : [];
-    [...bg, ...r.characters, ...r.environment].forEach((it, i) => { all.push(it); tags.push(`${r.name} · ${i < bg.length ? 'Background' : i < bg.length + r.characters.length ? 'Character' : 'Environment'}`); });
-    const bgCard = r.background ? `<div class="sub-label">Background</div><div class="game-grid-editorial">${card(r.background, `S|hbbg:${ri}`).replace('span-' + spanOf(r.background), 'span-3')}</div>` : '';
+    const bg = r.background ? [r.background] : [], ft = r.feature || [];
+    bg.forEach(it => { all.push(it); tags.push(`${r.name} · Background`); });
+    ft.forEach(it => { all.push(it); tags.push(`${r.name} · ${it.group || 'Main character'}`); });
+    [...r.characters, ...r.environment].forEach((it, i) => { all.push(it); tags.push(`${r.name} · ${i < r.characters.length ? 'Character' : 'Tilemap'}`); });
+    // the main character gets its own centre-stage block: close-up first, sprite sheets behind "See the process"
+    const ftHtml = ft.length ? `<div class="hb-feature">${groupedGrid(`hb:${ri}:feature`, ft).replace(/ data-i="\d+"/g, '').replace(/<section class="proj"/g, '<section class="proj open static"')}</div>` : '';
+    const bgCard = r.background ? `<div class="sub-label">Background</div><div class="game-grid-editorial hb-bg">${card(r.background, `S|hbbg:${ri}`).replace('span-' + spanOf(r.background), 'span-3')}</div>` : '';
     return `<section class="region" id="r${r.num}">
       <div class="region-head"><div class="region-num">${r.num}</div><div><div class="region-title" ${ce(`T|heartbreaker.regions.${ri}`, 'name')}>${esc(r.name)}</div><div class="region-sub" ${ce(`T|heartbreaker.regions.${ri}`, 'sub')}>${esc(r.sub)}</div></div></div>
-      <p class="region-text" ${ce(`T|heartbreaker.regions.${ri}`, 'text', 'Describe this region')}>${esc(r.text)}</p>
+      ${EDIT.on || !isPh(r.text) ? `<p class="region-text" ${ce(`T|heartbreaker.regions.${ri}`, 'text', 'Describe this region')}>${esc(r.text)}</p>` : ''}
       ${bgCard}
-      <div class="sub-label">Characters</div>${grid(`hb:${ri}:characters`, r.characters)}
-      ${r.environment.length || EDIT.on ? `<div class="sub-label">Environment</div>${grid(`hb:${ri}:environment`, r.environment)}` : ''}
+      ${ftHtml}
+      ${r.characters.length || EDIT.on ? `<div class="sub-label">Characters</div>${grid(`hb:${ri}:characters`, r.characters)}` : ''}
+      ${r.environment.length || EDIT.on ? `<div class="sub-label">Tilemaps</div><div class="hb-tiles">${grid(`hb:${ri}:environment`, r.environment)}</div>` : ''}
     </section>`;
   }).join('');
   el.innerHTML = `
@@ -4007,11 +4135,12 @@ function renderGame() {
     <div class="game-body">
       <div class="game-filters" role="tablist" aria-label="Jump to region">
         <button class="game-filter on" data-jump="hb-top">Overview</button>
+        ${H.moodboard ? '<button class="game-filter" data-jump="hb-mood">Moodboard</button>' : ''}
         ${H.regions.map(r => `<button class="game-filter" data-jump="r${r.num}">${esc(r.name)}</button>`).join('')}
       </div>
       <div class="game-scroll" id="gameScroll"><div style="max-width:1200px;margin:0 auto">
         <div id="hb-top">
-          <div class="hb-hero">${single('hbhero', H.hero)}
+          <div class="hb-hero" ${!EDIT.on && H.hero && H.hero.img ? `data-lb tabindex="0" role="button" aria-label="View ${esc(H.hero.title)} full size" style="cursor:zoom-in"` : ''}>${single('hbhero', H.hero)}
             <div class="hb-hero-over" style="pointer-events:none"><div class="page-kicker">${esc(c.title)}</div><div class="page-title">${esc(H.title)}</div></div></div>
           <div class="hb-intro">
             <div><p class="page-desc" ${ce('T|heartbreaker', 'concept')}>${esc(H.concept)}</p>
@@ -4019,11 +4148,13 @@ function renderGame() {
             <div class="hb-note"><b>Status: paused</b><span ${ce('T|heartbreaker', 'note')}>${esc(H.note)}</span></div>
           </div>
         </div>
+        ${moodHtml}
         ${regions}
         <div class="hb-end"><div><b>Deeper layers</b><span>Layers ${H.regions.length} to ${H.totalLayers} are still to be designed.</span></div><a class="back-btn" style="text-decoration:none;margin:0" href="#/">← Back to Map</a></div>
       </div></div>
     </div>`;
   wireCards(el, all, i => tags[i]);
+  wireProjects(el);
   const sc = $('#gameScroll'), btns = $$('[data-jump]', el);
   btns.forEach(b => b.addEventListener('click', () => {
     const t = document.getElementById(b.dataset.jump);
@@ -4086,6 +4217,10 @@ function renderClasswork(c) {
       }).join('')}
       ${EDIT.on ? `<button class="ed-add" style="width:100%;margin-top:18px" data-addpages="${ci}.${i}">${EI.plus}<span>Add pages</span><small>pick one or more images, or drop them here</small></button>` : ''}`;
     if (keepPos) $('#cwViewer').scrollTop = st; else $('#cwViewer').scrollTop = 0;
+    if (!EDIT.on) {
+      const pages = p.images.filter(Boolean).map((src, k) => ({ img: src, title: `${p.title}, page ${k + 1}` }));
+      $$('img.cw-page', $('#cwInner')).forEach((im, k) => { im.style.cursor = 'zoom-in'; im.addEventListener('click', () => openLb(pages, k, im, () => p.title)); });
+    }
   };
   $$('.cw-proj-btn', el).forEach(b => b.addEventListener('click', () => load(+b.dataset.i)));
   load(cwSel, true);
@@ -4105,9 +4240,7 @@ function renderAbout() {
         <div class="page-kicker" ${ce('T|site', 'role')}>${esc(S.role)}</div>
         <div class="page-title" ${ce('T|site', 'name')}>${esc(S.name)}</div>
         <p class="page-desc" ${ce('T|site', 'bio')}>${esc(S.bio)}</p>
-        <div class="a-block"><div class="a-label">Artistic background</div>${S.background.map((p, i) => `<p ${ce('T|site.background', i)}>${esc(p)}</p>`).join('')}</div>
-        <div class="a-block"><div class="a-label">Education</div>${S.education.map((e, i) => `<div class="edu-item"><b ${ce(`T|site.education.${i}`, 'what')}>${esc(e.what)}</b><span>${esc(e.where)} · ${esc(e.when)}</span></div>`).join('')}</div>
-        <div class="a-block"><div class="a-label">Interests & inspirations</div>${S.inspirations.map((p, i) => `<p ${ce('T|site.inspirations', i)}>${esc(p)}</p>`).join('')}</div>
+        <div class="a-block"><div class="a-label">Education</div>${S.education.map((e, i) => `<div class="edu-item"><b ${ce(`T|site.education.${i}`, 'what')}>${esc(e.what)}</b><span>${esc([e.where, e.when].filter(Boolean).join(' · '))}</span></div>`).join('')}</div>
         <div class="a-block"><div class="a-label">Skills</div><div class="tags">${S.skills.map(s => `<span>${esc(s)}</span>`).join('')}</div></div>
         <div class="a-block"><div class="a-label">Software</div><div class="tags">${S.software.map(s => `<span>${esc(s)}</span>`).join('')}</div></div>
         <div class="a-block"><div class="a-label">Contact</div><div class="hud-links"><a class="chip solid" href="${esc(mailHref)}">${esc(S.email)}</a>${S.links.map(l => `<a class="chip" href="${esc(l.url)}" ${ext(l.url)}>${esc(l.label)}</a>`).join('')}</div></div>
@@ -4146,13 +4279,75 @@ function drawLb() {
   $('#lbStage').innerHTML = it.video ? `<video class="lb-img" src="${esc(it.video)}" ${it.img ? `poster="${esc(it.img)}"` : ''} controls autoplay playsinline></video>` : it.img ? `<img class="lb-img" src="${esc(it.img)}" alt="${esc(it.title)}" style="image-rendering:${it.pixel ? 'pixelated' : 'auto'}">` : `<div class="lb-ph ph-box" style="--r:${r}">${slot(it)}</div>`;
   $('#lbTitle').textContent = it.title;
   $('#lbTag').textContent = `${lbTag ? lbTag(lbI) + ' · ' : ''}${lbI + 1} / ${lbSet.length}`;
+  zoomReset();
 }
+/* ---------- zoom inside the viewer: scroll / double-click / buttons, drag to pan.
+   Once you zoom in, the full-resolution copy (name.hd.webp) is swapped in so it stays sharp. ---------- */
+const ZM = { s: 1, x: 0, y: 0, drag: null };
+const zImg = () => $('#lbStage img.lb-img');
+function zoomApply(smooth) {
+  const im = zImg(); if (!im) return;
+  const w = im.offsetWidth, h = im.offsetHeight, mx = Math.max(0, (w * ZM.s - w) / 2), my = Math.max(0, (h * ZM.s - h) / 2);
+  ZM.x = clamp(ZM.x, -mx, mx); ZM.y = clamp(ZM.y, -my, my);
+  im.style.transition = smooth ? 'transform .35s cubic-bezier(.22,1,.36,1)' : 'none';
+  im.style.transform = `translate(${ZM.x}px, ${ZM.y}px) scale(${ZM.s})`;
+  im.style.cursor = ZM.drag ? 'grabbing' : ZM.s > 1.01 ? 'grab' : 'zoom-in';
+  $('#lightbox').classList.toggle('zoomed', ZM.s > 1.01);
+  $('#lbZoomPct').textContent = Math.round(ZM.s * 100) + '%';
+  if (ZM.s > 1.01 && !im.dataset.hd && /\.webp$/.test(im.getAttribute('src'))) {
+    im.dataset.hd = '1';
+    const hd = new Image(), want = im.getAttribute('src').replace(/(\.hd)?\.webp$/, '.hd.webp');
+    hd.onload = () => { if (zImg() === im) im.src = want; };
+    hd.src = want;
+  }
+}
+function zoomTo(ns, cx, cy, smooth = true) {          // cx, cy: point on screen to keep still
+  const im = zImg(); if (!im) return;
+  ns = clamp(ns, 1, 8);
+  const r = im.getBoundingClientRect(), ox = r.left + r.width / 2, oy = r.top + r.height / 2;
+  const px = cx == null ? 0 : cx - ox, py = cy == null ? 0 : cy - oy, k = ns / ZM.s;
+  ZM.x = ZM.x - px * (k - 1); ZM.y = ZM.y - py * (k - 1); ZM.s = ns;
+  if (ns === 1) { ZM.x = ZM.y = 0; }
+  zoomApply(smooth);
+}
+const zoomBy = (f, cx, cy) => zoomTo(ZM.s * f, cx, cy);
+function zoomReset() { ZM.s = 1; ZM.x = ZM.y = 0; ZM.drag = null; zoomApply(true); }
+/* open every image as big as the screen allows (small pixel sprites are scaled up too) */
+function lbFit() {
+  const im = zImg(); if (!im || !im.naturalWidth) return;
+  const nw = +im.dataset.nw || im.naturalWidth, nh = +im.dataset.nh || im.naturalHeight;
+  im.dataset.nw = nw; im.dataset.nh = nh;
+  const k = Math.min((innerWidth - 150) / nw, (innerHeight - 120) / nh);
+  im.style.width = Math.round(nw * k) + 'px'; im.style.height = Math.round(nh * k) + 'px';
+  zoomApply(false);
+}
+new MutationObserver(() => { const im = zImg(); if (im && !im.dataset.fitHooked) { im.dataset.fitHooked = '1'; im.complete ? lbFit() : im.addEventListener('load', lbFit, { once: true }); } })
+  .observe($('#lbStage'), { childList: true });
+$('#lbStage').addEventListener('wheel', e => { if (!zImg()) return; e.preventDefault(); zoomTo(ZM.s * Math.exp(-e.deltaY * .0025), e.clientX, e.clientY, false); }, { passive: false });
+$('#lbStage').addEventListener('dblclick', e => { if (!zImg()) return; ZM.s > 1.01 ? zoomReset() : zoomTo(2.5, e.clientX, e.clientY); });
+$('#lbStage').addEventListener('pointerdown', e => {
+  const im = zImg(); if (!im || e.button > 0) return;
+  e.preventDefault();
+  ZM.drag = { x: e.clientX, y: e.clientY, ox: ZM.x, oy: ZM.y, moved: false, onImg: e.target === im };
+  const mv = ev => { const d = ZM.drag; if (!d) return; if (Math.hypot(ev.clientX - d.x, ev.clientY - d.y) > 4) d.moved = true;
+    if (ZM.s > 1.01) { ZM.x = d.ox + ev.clientX - d.x; ZM.y = d.oy + ev.clientY - d.y; zoomApply(false); } };
+  const up = ev => { removeEventListener('pointermove', mv); removeEventListener('pointerup', up);
+    const d = ZM.drag; ZM.drag = null;
+    if (d && !d.moved && !d.onImg && ZM.s <= 1.01) return closeLb();                               // click on the dark area closes
+    if (d && !d.moved && ZM.s <= 1.01 && ev.detail < 2) zoomTo(2.5, ev.clientX, ev.clientY);   // single click on a fitted image zooms in
+    else zoomApply(false); };
+  addEventListener('pointermove', mv); addEventListener('pointerup', up);
+});
+addEventListener('resize', () => { if ($('#lightbox').classList.contains('open')) lbFit(); });
+$('#lbZIn').onclick = () => zoomBy(1.6); $('#lbZOut').onclick = () => zoomBy(1 / 1.6); $('#lbZFit').onclick = zoomReset;
 const stepLb = d => { lbI = (lbI + d + lbSet.length) % lbSet.length; drawLb(); };
 $('#lbClose').onclick = closeLb; $('#lbPrev').onclick = () => stepLb(-1); $('#lbNext').onclick = () => stepLb(1);
 $('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') closeLb(); });
 document.addEventListener('keydown', e => {
   if (!$('#lightbox').classList.contains('open')) return;
-  if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowRight') stepLb(1); if (e.key === 'ArrowLeft') stepLb(-1);
+  if (e.key === 'Escape') { if (ZM.s > 1.01) zoomReset(); else closeLb(); }
+  if (e.key === 'ArrowRight') stepLb(1); if (e.key === 'ArrowLeft') stepLb(-1);
+  if (e.key === '+' || e.key === '=') zoomBy(1.5); if (e.key === '-' || e.key === '_') zoomBy(1 / 1.5); if (e.key === '0') zoomReset();
 });
 
 /* Copy email */
@@ -4219,6 +4414,7 @@ function getList(key) {
 function getSingle(key) {
   const [a, b] = key.split(':');
   if (a === 'hbhero') return HEARTBREAKER.hero;
+  if (a === 'hbmood') return HEARTBREAKER.moodboard;
   if (a === 'hbbg') return HEARTBREAKER.regions[+b].background;
   if (a === 'photo') return SITE.photo;
   if (a === 'cover') {
@@ -4575,7 +4771,7 @@ function textSections() {
   const F = (label, path, opts = {}) => ({ label, path, ...opts });
   return [
     ['About you', [F('Name', 'site.name'), F('Short role (map panel)', 'site.roleShort'), F('Role line', 'site.role'), F('Intro on the map', 'site.intro', { area: 1 }), F('Bio on About page', 'site.bio', { area: 1 }), F('Based in', 'site.location'), F('Email', 'site.email'), F('Instagram handle', 'site.handle')]],
-    ['Background & skills', [F('Artistic background (blank line between paragraphs)', 'site.background', { area: 1, mode: 'paras' }), F('Interests & inspirations', 'site.inspirations', { area: 1, mode: 'paras' }), F('Skills (comma separated)', 'site.skills', { mode: 'csv' }), F('Software (comma separated)', 'site.software', { mode: 'csv' })]],
+    ['Background & skills', [F('Skills (comma separated)', 'site.skills', { mode: 'csv' }), F('Software (comma separated)', 'site.software', { mode: 'csv' })]],
     ['Education', S.education.flatMap((e, i) => [F('Degree and major', `site.education.${i}.what`), F('School', `site.education.${i}.where`), F('Years', `site.education.${i}.when`)])],
     ['Links', S.links.flatMap((l, i) => [F(`Link ${i + 1} name`, `site.links.${i}.label`), F(`Link ${i + 1} handle`, `site.links.${i}.handle`), F(`Link ${i + 1} address`, `site.links.${i}.url`)])],
     ['Heartbreaker', [F('Concept', 'heartbreaker.concept', { area: 1 }), F('Team note', 'heartbreaker.note', { area: 1 }),
@@ -4708,14 +4904,14 @@ function landing(fromMap = false) {
   const R = rng(77), B = Array.from({ length: 90 }, () => ({ x: R(), y: R(), r: 3 + Math.pow(R(), 2.2) * 26, sp: .5 + R() * 1.1, ph: R() * 6.28 }));
   const go = v => { target = clamp(v, 0, 1); lastIn = performance.now(); };
 
-  L.addEventListener('wheel', e => { e.preventDefault(); go(target + clamp(e.deltaY, -120, 120) * .0008); }, { passive: false });
+  L.addEventListener('wheel', e => { e.preventDefault(); go(target + clamp(e.deltaY, -120, 120) * .0016); }, { passive: false });
   let ty0 = null, tt0 = 0;
   L.addEventListener('touchstart', e => { ty0 = e.touches[0].clientY; tt0 = target; }, { passive: true });
   L.addEventListener('touchmove', e => { if (ty0 !== null) go(tt0 + (ty0 - e.touches[0].clientY) / (H * .7)); }, { passive: true });
   cue.addEventListener('click', () => go(1));
   $('#ldSkip').addEventListener('click', () => { p = target = 1; finish(); });
   addEventListener('keydown', e => {
-    if (done || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (done || released || e.ctrlKey || e.metaKey || e.altKey) return;
     e.stopImmediatePropagation();
     if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(target + .1); }
     if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); go(target - .1); }
@@ -4723,8 +4919,17 @@ function landing(fromMap = false) {
     if (e.key === 'Home') { e.preventDefault(); go(0); }
   }, true);
 
+  // once most of the map is showing, hand over: the rest glides in by itself and the map is usable right away
+  let released = false;
+  const release = () => {
+    if (released) return; released = true; target = 1;
+    L.style.pointerEvents = 'none'; document.body.classList.remove('ld-diving');
+  };
+  const grab = () => { if (released && !done) { p = target = 1; finish(); } };     // touching the map snaps the last bit
+  port.addEventListener('pointerdown', grab, true); port.addEventListener('wheel', grab, true);
   function finish() {
     if (done) return; done = true;
+    port.removeEventListener('pointerdown', grab, true); port.removeEventListener('wheel', grab, true);
     port.style.transform = ''; port.style.transformOrigin = ''; L.remove(); document.body.classList.remove('ld-diving');
     removeEventListener('resize', size);
   }
@@ -4733,6 +4938,7 @@ function landing(fromMap = false) {
     const dt = Math.min(3, (now - last) / 16.667); last = now;
     // the scroll is in charge: no snapping, it just follows (only the last sliver completes itself)
     if (now - lastIn > 400 && target > .96 && target < 1) target = 1;
+    if (!released && p > .72 && target >= p) release();
     p += (target - p) * Math.min(1, (reduce ? .3 : .1) * dt);
     if (Math.abs(target - p) < .0008) p = target;
 
@@ -4753,7 +4959,7 @@ function landing(fromMap = false) {
     port.style.transformOrigin = `${ox.toFixed(1)}px ${oy.toFixed(1)}px`;
     port.style.transform = `translate(${((vw() / 2 - ox) * up).toFixed(1)}px, ${((vh() / 2 - oy) * up).toFixed(1)}px) scale(${(1 + 5 * up).toFixed(4)})`;
     cv.style.opacity = 1 - clamp((p - .78) / .22, 0, 1);
-    document.body.classList.toggle('ld-diving', p < .9);
+    if (!released) document.body.classList.toggle('ld-diving', p < .9);
 
     // bubbles: a few drift up at rest, then a rush as you dive
     const waterTop = H * (1 - level / 100), time = (now - t0) / 1000;
@@ -4788,7 +4994,8 @@ function landing(fromMap = false) {
   if (fromMap) { p = 1; go(0); }                       // play the dive backwards, up to the surface
   requestAnimationFrame(frame);
 }
-landing();
+// only on the front door: a shared link straight to a page (#/game, #/about...) opens that page right away
+if (!location.hash.replace(/^#\/?/, '')) landing();
 $('#driveBack').addEventListener('click', () => { closeLoc(); Object.keys(keys).forEach(k => keys[k] = false); landing(true); });
 
 let firstRoute = true;
