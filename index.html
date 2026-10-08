@@ -3567,15 +3567,34 @@ function buildTerrain() {
   s += `<circle cx="${crater.x}" cy="${crater.y + 6}" r="${(cr * .13).toFixed(1)}" fill="${PAL.hotDeep}"/>`;
   s += `<circle cx="${crater.x}" cy="${crater.y}" r="${cr}" fill="none" stroke="${PAL.ink}" stroke-width="3"/>`;
 
-  // river: sea-coloured with an ink edge
-  const rv = 'M1330,780 C1290,900 1190,960 1210,1080 S1310,1300 1230,1450 S1130,1650 1160,1795';
-  s += `<path d="${rv}" fill="none" stroke="${PAL.ink}" stroke-width="12" stroke-linecap="round"/><path d="${rv}" fill="none" stroke="${PAL.sea}" stroke-width="7" stroke-linecap="round"/>`;
+  // river: rises in a small lake, winds south and runs out through the coast into the sea
+  const main = ISLANDS.find(I => I.id === 'main');
+  const RIV = [[[1330, 780], [1290, 900], [1190, 960], [1210, 1080]], [[1210, 1080], [1230, 1200], [1310, 1300], [1230, 1450]],
+               [[1230, 1450], [1150, 1600], [1130, 1650], [1160, 1795]], [[1160, 1795], [1190, 1940], [1150, 2000], [1150, 2080]]];
+  const rv = 'M' + RIV[0][0] + RIV.map(([, a, b, c]) => ` C${a} ${b} ${c}`).join('');
+  s += `<clipPath id="mainClip"><path d="${blobPath(main, 3)}"/></clipPath><g clip-path="url(#mainClip)" fill="none" stroke-linecap="round">
+    <path d="${rv}" stroke="${PAL.ink}" stroke-width="15"/><path d="${rv}" stroke="${PAL.sea}" stroke-width="10"/></g>`;
+  s += `<ellipse cx="1338" cy="768" rx="40" ry="24" fill="${PAL.sea}" stroke="${PAL.ink}" stroke-width="3"/><ellipse cx="1338" cy="768" rx="40" ry="24" fill="url(#dotB)"/>`;
 
   // roads
   const pg = P.game, pc = P.characters, pk = P.sketchbook, pw = P.creatures;
+  const ROADS = [[[pc.x, pc.y], [1340, 1100], [pg.x - 60, pg.y + 260]], [[pc.x, pc.y], [1120, 1420], [pk.x, pk.y]],
+                 [[pk.x, pk.y], [1820, 1520], [pw.x, pw.y]], [[pg.x + 40, pg.y + 265], [1930, 1170], [pw.x, pw.y]]];
   s += `<g fill="none" stroke="${PAL.ink}" stroke-opacity=".55" stroke-width="2.5" stroke-dasharray="9 8" stroke-linecap="round">
-    <path d="M${pc.x},${pc.y} Q1340,1100 ${pg.x - 60},${pg.y + 260}"/><path d="M${pc.x},${pc.y} Q1120,1420 ${pk.x},${pk.y}"/>
-    <path d="M${pk.x},${pk.y} Q1820,1520 ${pw.x},${pw.y}"/><path d="M${pg.x + 40},${pg.y + 265} Q1930,1170 ${pw.x},${pw.y}"/></g>`;
+    ${ROADS.map(([a, b, c]) => `<path d="M${a} Q${b} ${c}"/>`).join('')}</g>`;
+
+  // a little plank bridge wherever a road crosses the river
+  const bez = (pts, t) => { let p = pts; while (p.length > 1) p = p.slice(1).map((q, i) => [p[i][0] + (q[0] - p[i][0]) * t, p[i][1] + (q[1] - p[i][1]) * t]); return p[0]; };
+  const rivPts = RIV.flatMap(seg => Array.from({ length: 120 }, (_, i) => bez(seg, i / 120)));
+  ROADS.forEach(road => {
+    let best = { d: 1e9 };
+    for (let i = 0; i <= 400; i++) { const t = i / 400, q = bez(road, t); for (const r of rivPts) { const d = Math.hypot(q[0] - r[0], q[1] - r[1]); if (d < best.d) best = { d, t, q }; } }
+    if (best.d > 8) return;
+    const a = bez(road, Math.max(0, best.t - .01)), b = bez(road, Math.min(1, best.t + .01)), ang = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
+    s += `<g transform="translate(${best.q[0].toFixed(1)} ${best.q[1].toFixed(1)}) rotate(${ang.toFixed(1)})" stroke="${PAL.ink}" stroke-linecap="round">
+      <rect x="-17" y="-7" width="34" height="14" rx="2" fill="${PAL.land}" stroke-width="2.2"/>
+      <path d="M-8,-7V7M0,-7V7M8,-7V7" stroke-width="1.2" stroke-opacity=".5"/><path d="M-20,-10H20M-20,10H20" stroke-width="2.4"/></g>`;
+  });
 
   // the uncharted isle is hatched over, the old way of marking the unknown
   const north = ISLANDS.find(I => I.id === 'north');
